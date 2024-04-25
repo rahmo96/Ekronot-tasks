@@ -5,6 +5,8 @@ from Shekel import Shekel
 from Rates import rates
 
 """
+Rahamim Tadela - 208189621
+Almog Ben Gur - 
 main.py: main module
 """
 def add(self, other_currency):
