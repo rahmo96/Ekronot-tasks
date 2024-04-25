@@ -28,10 +28,17 @@ class Student:
     def get_name(self):
         return self.name
     def get_id(self):
+        """
+        A method to get the id attribute of the object.
+        """
         return self.id
     def get_courses(self):
         return self.courses
     def calc_average(self):
+        """
+        Calculate the average grade based on the grades of all courses in the self.courses list.
+        Returns the average grade as a float.
+        """
         if not self.courses:
             return 0
         if len(self.courses) == 1:
@@ -42,8 +49,26 @@ class Student:
 
 
 def to_lower(name):
+    """
+    Converts the input string `name` to lowercase.
+
+    Parameters:
+    name (str): The input string to be converted to lowercase.
+
+    Returns:
+    str: The input string `name` converted to lowercase.
+    """
     return name.lower()
 def if_file_exist(file_path):
+    """
+    Checks if the file at the given `file_path` exists.
+
+    Parameters:
+    file_path (str): The path of the file to be checked.
+
+    Returns:
+    bool: True if the file exists, False otherwise.
+    """
     try:
         with open(file_path, 'r'):
             return True
@@ -51,6 +76,15 @@ def if_file_exist(file_path):
         return False
 
 def copy_text_until_sign(file_path):
+    """
+    Copies text from a file until a certain sign is encountered and processes the content to create a list of Student objects.
+
+    Parameters:
+    file_path (str): The path to the file to be read.
+
+    Returns:
+    list: A list of Student objects containing the name, id, and courses of each student.
+    """
     students = []
     try:
         with open(file_path, 'r') as file:
@@ -81,6 +115,11 @@ def copy_text_until_sign(file_path):
     return students
 
 def calc_average_for_student():
+    """
+    A function to calculate the average for a specific student.
+    This function prompts the user for the student's name, retrieves the student from a list based on the name,
+    calculates the average for the student, and prints the result.
+    """
     print("Which student's average do you want to calculate?")
     name = input()
     student =list( filter(lambda student: to_lower(student.get_name()) == to_lower(name), students_list))
@@ -93,6 +132,15 @@ def calc_average_for_student():
     print(f"The average for {student.name} is {average}")
 
 def calc_average_for_course():
+    """
+    Calculates the average grade for a given course.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
     course_name = input("Enter the name of the course: ")
     courses = list(reduce(lambda x, y: x + y, map(lambda student: student.courses, students_list)))
     courses = list(filter(lambda course: to_lower(course.get_course_name()) == to_lower(course_name), courses))
@@ -104,11 +152,22 @@ def calc_average_for_course():
         average = reduce(lambda x, y: x + y, courses) / len(courses)
     print(f"The average for {course_name} is {average}")
 def export_average_for_all():
+    """
+    Export the average amounts for all students to a text file.
+
+    This function prompts the user to enter a name for the export file. If the entered name does not end with the '.txt' extension, it will be automatically appended. The function then opens the file in write mode and writes the student IDs and their corresponding average amounts, separated by a tab character, on separate lines.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     print("Enter a name for the export file:")
     file_name = input()
     if not file_name.endswith('.txt'):
         file_name += '.txt'
-    print("The values will be exported to", file_name)
+    print("The amounts will be exported to", file_name)
     print("\n")
     with open(file_name, 'w') as file:
         lines = [f"{student.get_id()}\t{student.calc_average()}\n" for student in students_list]
@@ -149,7 +208,7 @@ if __name__ == '__main__':
 
         try:
             user_choice = int(input("Enter your choice: "))
-        except ValueError:
+        except amountError:
             print("Invalid choice. Please try again.")
             continue
 
